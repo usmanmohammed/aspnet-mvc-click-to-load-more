@@ -8,11 +8,16 @@ namespace ClickToLoadMore.Models
 {
     public class DatabaseContext : DbContext
     {
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) 
+            : base(options)
+        {
+        }
+
         public DbSet<Item> Items { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=coreDB;Trusted_Connection=True;");
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

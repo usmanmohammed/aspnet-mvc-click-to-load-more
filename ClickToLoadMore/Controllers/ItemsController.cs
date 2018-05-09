@@ -6,22 +6,73 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClickToLoadMore.Models;
+using Microsoft.AspNetCore.Http;
+using ClickToLoadMore.Extensions;
 
 namespace ClickToLoadMore.Controllers
 {
     public class ItemsController : Controller
     {
         private readonly DatabaseContext _context;
+        private const int _recordsPerLoad = 6;
 
         public ItemsController(DatabaseContext context)
         {
             _context = context;
+            ViewBag.RecordsPerLoad = _recordsPerLoad;
         }
 
         // GET: Items
-        public async Task<IActionResult> Index()
+        public async Task<ActionResult> Index(int? pageNumber)
         {
-            return View(await _context.Items.ToListAsync());
+            pageNumber = pageNumber ?? 0;
+            ViewBag.IsEndOfRecords = false;
+            if (IsAjaxRequest(Request))
+            {
+                var items = GetRecordsForPage(pageNumber.Value);
+                ViewBag.IsEndOfRecords = ((pageNumber.Value * _recordsPerLoad) >= items.Last().Key);
+                return PartialView("_ItemLi", items);
+            }
+            else
+            {
+                await LoadAllItemsToSession();
+                ViewBag.Items = GetRecordsForPage(pageNumber.Value);
+                return View("Index");
+            }
+        }
+
+        public async Task LoadAllItemsToSession()
+        {
+            int _itemIndex = 1;
+            var _items = await _context.Items.ToListAsync();
+
+            HttpContext.Session.SetObjectAsJson("Items", _items.OrderBy(f => f.Price).ToDictionary(x => _itemIndex++, z => z));
+            ViewBag.ItemsCount = _items.Count();
+        }
+
+        public Dictionary<int, Item> GetRecordsForPage(int pageNumber)
+        {
+            var _items = HttpContext.Session.GetObjectFromJson<Dictionary<int, Item>>("Items");
+
+            int from = (pageNumber * _recordsPerLoad);
+            int to = from + _recordsPerLoad;
+
+            return _items
+                .Where(z => z.Key > from && z.Key <= to)
+                .OrderBy(y => y.Key)
+                .ToDictionary(x => x.Key, x => x.Value);
+        }
+
+        public bool IsAjaxRequest(HttpRequest request)
+        {
+            if (request == null)
+                throw new ArgumentNullException("request");
+
+            if (request.Headers != null)
+                return (request.Headers["X-Requested-With"] == "XMLHttpRequest");
+
+            else
+            return false;
         }
 
         // GET: Items/Details/5

@@ -1,0 +1,17 @@
+﻿@model Dictionary<int, ClickToLoadMore.Models.Item>
+
+@foreach (var item in Model.Values)
+{
+    <li>
+        <div class="dashboard-tile">
+            <div class="red-bg">
+                <a class="clear-hyperlink" href="sds">
+                    <v class="glyphicon glyphicon-file tile-icon upload-tile-icon" />
+                    <div class="red upload-tile-overlay">
+                        <h3 class="tile-header upload-tile-text"><strong>@item.ItemName</strong></h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </li>
+}

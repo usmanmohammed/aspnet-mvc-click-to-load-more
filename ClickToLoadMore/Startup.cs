@@ -26,6 +26,8 @@ namespace ClickToLoadMore
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddDistributedMemoryCache();
+            services.AddSession();
             services.AddMvc();
         }
 
@@ -43,6 +45,8 @@ namespace ClickToLoadMore
             }
 
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-family: 'Segoe UI'
 }
 
 /* Wrapping element */
@@ -32,4 +33,116 @@
     .carousel-caption {
         display: none;
     }
+}
+
+
+
+.dashboard-tile {
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+}
+
+.tile-icon {
+    font-size: 50px;
+    margin-top: 25px;
+}
+
+.tile-header {
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.tile-count {
+    position: relative;
+    float: right;
+    padding: 0 5px;
+    font-family: "Segoe UI";
+    font-weight: 700;
+    color: #fff;
+    font-size: 18px;
+    max-width: 100px;
+    margin-left: -100%;
+}
+
+.green-bg {
+    background-color: green;
+    border: 1px solid green;
+    border-radius: 2px;
+    min-height: 150px;
+}
+
+.blue-bg {
+    background-color: #555597;
+    border: 1px solid #555597;
+    border-radius: 2px;
+    min-height: 150px;
+}
+
+.red-bg {
+    background-color: #db2d2d;
+    border: 1px solid #db2d2d;
+    border-radius: 2px;
+    min-height: 150px;
+}
+
+.yellow-bg {
+    background-color: #868600;
+    border: 1px solid #868600;
+    border-radius: 2px;
+    min-height: 150px;
+}
+
+a.clear-hyperlink {
+    color: #fff;
+}
+
+a:link {
+    outline: none;
+}
+
+.mail-option {
+    margin-top: -5px;
+    padding: 5px;
+    color: red;
+}
+
+.inbox-item {
+    color: #000;
+}
+
+a.inbox-item {
+    outline: none;
+}
+
+.red {
+    color: red;
+}
+
+.black {
+    color: black;
+}
+
+.upload-tile-text {
+    font-size: 14px;
+    word-wrap: break-word;
+    width: 125px;
+    padding: 15px;
+    margin-top: -5px;
+    font-family: 'Segoe UI';
+    padding-top: 10px;
+}
+
+.upload-tile {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.upload-tile-overlay {
+    height: 55px;
+    background-color: rgba(0, 0, 0, 0.60);
+    margin-top: 19%;
+    margin-bottom: -10px;
+    padding-right: -222px;
+    width: 100%;
 }
